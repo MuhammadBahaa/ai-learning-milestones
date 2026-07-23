@@ -108,6 +108,13 @@
   .resources { display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px; }
   .resources a { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
   .resource-note { font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: #8F85A6; }
+  .attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .attachment-chip {
+    font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 5px 12px;
+    border-radius: 10px; background: #231C39; color: #C9C0DC; border: 1px dashed #4A3D6B;
+    transform: rotate(-1deg); display: inline-flex; align-items: center; gap: 6px;
+  }
+  .attachment-note { font-size: 13px; color: #8F85A6; font-style: italic; }
 
   .next { position: relative; }
   .next-dot {
@@ -255,6 +262,11 @@
               }
               return '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">↗ ' + esc(r.label) + '</a>';
             }).join('') + '</div>' : '') +
+          (m.attachment && m.attachment.file ?
+            '<div class="attachment">' +
+              '<span class="attachment-chip">📎 ' + esc(m.attachment.file) + '</span>' +
+              (m.attachment.note ? '<span class="attachment-note">' + esc(m.attachment.note) + '</span>' : '') +
+            '</div>' : '') +
         '</div>' +
       '</article>';
   });

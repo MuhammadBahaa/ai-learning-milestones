@@ -21,6 +21,8 @@
      status: 'done' | 'progress' | 'planned' — adds a status pill
        ('planned' renders dimmed).
      cvWorthy: true — adds the gold ★ CV-worthy badge.
+     attachment: { file: 'welcome.eml', note: 'a playful caption' }
+       — adds a 📎 email-style attachment chip at the card's bottom.
    ============================================================= */
 
 window.CONFIG = {
@@ -89,6 +91,18 @@ window.MILESTONES = [
     resources: [],
   },
   {
+    title: 'Subscribed to Cursor',
+    date: '4 Apr 2026',
+    category: 'Subscriptions',
+    description: 'Upgraded from trial curiosity to a paid Cursor subscription — the first official line item in the AI tooling budget.',
+    skills: [],
+    resources: [],
+    attachment: {
+      file: 'welcome-to-cursor.eml',
+      note: 'Receipt attached — no going back after this one.',
+    },
+  },
+  {
     title: 'Agentic coding toolchain',
     date: 'Apr 2026 - Present',
     category: 'Agentic Coding',
@@ -115,6 +129,18 @@ window.MILESTONES = [
       'AI-assisted coding',
     ],
     resources: [],
+  },
+  {
+    title: 'Subscribed to Claude Pro',
+    date: '4 Jun 2026',
+    category: 'Subscriptions',
+    description: 'Subscribed to Claude Pro. The welcome email promised a first commit within five minutes — an accurate forecast, judging by the rest of this timeline.',
+    skills: [],
+    resources: [],
+    attachment: {
+      file: 'welcome-to-claude-code.eml',
+      note: '“Your Claude Code journey starts now.” — it really did. 🚀',
+    },
   },
   {
     title: 'Claude Code adoption',

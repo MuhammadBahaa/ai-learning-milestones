@@ -21,7 +21,7 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
 },
 ```
 
-Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill (`planned` renders dimmed), and `cvWorthy: true` adds a gold ★ badge. Without them, entries are plain milestones.
+Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill (`planned` renders dimmed), `cvWorthy: true` adds a gold ★ badge, and `attachment: { file, note }` adds a playful 📎 attachment chip. Without them, entries are plain milestones.
 
 Three ways to do it, pick whichever is closest to hand:
 
