@@ -198,7 +198,9 @@
 
   items.forEach(function (it) {
     var m = it.m;
-    var s = STATUS[m.status] || STATUS.planned;
+    // status is optional: entries without one render as plain milestones (done look, no pill)
+    var hasStatus = Object.prototype.hasOwnProperty.call(STATUS, m.status);
+    var s = hasStatus ? STATUS[m.status] : STATUS.done;
     var my = monthYear(m.date || '');
     var month = my[0] || '';
     var year = my[1] || '';
@@ -213,7 +215,7 @@
       yearMonths[year].push({ label: month, target: monthKey });
     }
 
-    var ring = (m.status === 'done' && m.cvWorthy) ? 'var(--accent)' : s.ring;
+    var ring = ((!hasStatus || m.status === 'done') && m.cvWorthy) ? 'var(--accent)' : s.ring;
     var skills = Array.isArray(m.skills) ? m.skills : [];
     var resources = Array.isArray(m.resources) ? m.resources : [];
 
@@ -225,7 +227,7 @@
         '<div class="card' + (s.planned ? ' card-planned' : '') + '">' +
           '<div class="meta">' +
             '<span class="date">' + esc(m.date) + '</span>' +
-            '<span class="status ' + s.cls + '">' + s.label + '</span>' +
+            (hasStatus ? '<span class="status ' + s.cls + '">' + s.label + '</span>' : '') +
             '<span class="category">' + esc(m.category) + '</span>' +
             (m.cvWorthy ? '<span class="cv-badge">★ CV-worthy</span>' : '') +
           '</div>' +
@@ -268,8 +270,13 @@
     window.scrollTo({ top: top, behavior: 'smooth' });
   });
 
-  var doneCount = data.filter(function (m) { return m.status === 'done'; }).length;
-  counterEl.textContent = doneCount + ' of ' + data.length + ' unlocked';
+  var anyStatus = data.some(function (m) { return m.status; });
+  if (anyStatus) {
+    var doneCount = data.filter(function (m) { return m.status === 'done' || !m.status; }).length;
+    counterEl.textContent = doneCount + ' of ' + data.length + ' unlocked';
+  } else {
+    counterEl.textContent = data.length + ' milestones';
+  }
 })();
 </script>
 </body>
