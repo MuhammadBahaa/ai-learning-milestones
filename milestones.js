@@ -36,6 +36,16 @@ window.MILESTONES = [
     cvWorthy: false,
   },
   {
+    title: 'Context awareness',
+    date: 'Jan 2026 - Apr 2026',
+    status: 'done',
+    category: 'Foundations',
+    description: 'Moved from one-off prompts to context-aware AI work: fed the agent real project context and drove the big cards refactor with it — a deep, wide restructure that landed with only two bugs.',
+    skills: [],
+    resources: [],
+    cvWorthy: false,
+  },
+  {
     title: 'Python foundations for AI',
     date: '12 Jan 2026',
     status: 'done',
