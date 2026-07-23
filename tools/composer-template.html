@@ -1,0 +1,636 @@
+<meta charset="utf-8">
+<title>Milestone Composer — AI Milestones</title>
+<style>
+  :root {
+    --bg: #14101F;
+    --panel: #1C1630;
+    --panel-2: #231C39;
+    --border: #35294F;
+    --border-strong: #4A3D6B;
+    --ink: #F1ECFA;
+    --muted: #A79DBE;
+    --faint: #8F85A6;
+    --accent: #8B6CFF;
+    --accent-ink: #C9B6FF;
+    --ok: #5FE3A1;
+    --danger: #E2557B;
+    --sans: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #F6F4FB; --panel: #FFFFFF; --panel-2: #F1EDFA;
+      --border: #E2DBF2; --border-strong: #C9BCE8;
+      --ink: #221B33; --muted: #6B6283; --faint: #8D84A6;
+      --accent: #6F4EF2; --accent-ink: #5A3DD6; --ok: #157A4E; --danger: #B22553;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14101F; --panel: #1C1630; --panel-2: #231C39;
+    --border: #35294F; --border-strong: #4A3D6B;
+    --ink: #F1ECFA; --muted: #A79DBE; --faint: #8F85A6;
+    --accent: #8B6CFF; --accent-ink: #C9B6FF; --ok: #5FE3A1; --danger: #E2557B;
+  }
+  :root[data-theme="light"] {
+    --bg: #F6F4FB; --panel: #FFFFFF; --panel-2: #F1EDFA;
+    --border: #E2DBF2; --border-strong: #C9BCE8;
+    --ink: #221B33; --muted: #6B6283; --faint: #8D84A6;
+    --accent: #6F4EF2; --accent-ink: #5A3DD6; --ok: #157A4E; --danger: #B22553;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); line-height: 1.5;
+    background-image: radial-gradient(color-mix(in srgb, var(--accent) 14%, transparent) 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+  }
+  .shell { max-width: 1060px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  header h1 {
+    font-size: clamp(30px, 5vw, 44px); font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.05; margin: 0 0 10px; text-wrap: balance;
+  }
+  header h1 .dot { color: var(--accent); }
+  .lede { color: var(--muted); margin: 0 0 6px; max-width: 66ch; }
+  .lede a { color: var(--accent-ink); text-decoration: none; }
+  .lede a:hover { text-decoration: underline; }
+
+  .steps {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 18px 0 20px; padding: 12px 16px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); }
+  .step b { color: var(--ink); font-weight: 600; }
+  .step .n {
+    font-family: var(--mono); font-size: 11px; color: var(--accent-ink);
+    border: 1px solid var(--border-strong); border-radius: 999px; padding: 2px 8px;
+  }
+
+  .tabs { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+  .tab {
+    font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer;
+    border-radius: 999px; padding: 8px 16px; border: 1px solid var(--border-strong);
+    background: var(--panel-2); color: var(--ink);
+  }
+  .tab:hover { border-color: var(--accent); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .snapshot { font-family: var(--mono); font-size: 11.5px; color: var(--faint); margin-left: auto; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+  .panel h2 { font-size: 15px; margin: 0 0 16px; font-weight: 700; letter-spacing: .01em; }
+
+  .banner {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+    border: 1px solid var(--accent); border-radius: 10px; padding: 8px 12px;
+    margin-bottom: 16px; font-size: 13.5px;
+  }
+  .banner b { font-family: var(--mono); font-weight: 600; }
+  .banner button { padding: 5px 12px; font-size: 12.5px; }
+
+  label {
+    display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 6px;
+  }
+  label .soft { text-transform: none; letter-spacing: 0; }
+  .hint { font-size: 12.5px; color: var(--faint); margin: 6px 0 0; }
+  .field { margin-bottom: 18px; }
+  input, textarea {
+    width: 100%; background: var(--panel-2); color: var(--ink);
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    font-family: var(--sans); font-size: 14.5px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible, summary:focus-visible, .upload-btn:focus-within {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+  }
+  ::placeholder { color: var(--faint); opacity: .8; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  button {
+    font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer;
+    border-radius: 999px; padding: 10px 18px; border: 1px solid var(--border-strong);
+    background: var(--panel-2); color: var(--ink); transition: border-color .15s ease, background .15s ease;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { filter: brightness(1.08); }
+  button.danger:hover { border-color: var(--danger); color: var(--danger); }
+  @media (prefers-reduced-motion: reduce) { button, input, textarea, .tab { transition: none; } }
+
+  .copied { font-size: 13px; color: var(--ok); font-family: var(--mono); align-self: center; }
+
+  .search { margin-bottom: 12px; }
+  .list { display: flex; flex-direction: column; gap: 8px; max-height: 560px; overflow: auto; }
+  .list-item {
+    display: flex; gap: 10px; align-items: baseline; text-align: left; width: 100%;
+    border: 1px solid var(--border); background: var(--panel-2); border-radius: 10px;
+    padding: 10px 12px; font-weight: 500; cursor: pointer;
+  }
+  .list-item:hover { border-color: var(--accent); }
+  .li-num { font-family: var(--mono); font-size: 11px; color: var(--accent-ink); }
+  .li-title { flex: 1; font-size: 14px; color: var(--ink); }
+  .li-date { font-family: var(--mono); font-size: 11px; color: var(--faint); white-space: nowrap; }
+
+  .upload-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .upload-btn {
+    display: inline-block; cursor: pointer; border: 1px dashed var(--border-strong);
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; color: var(--muted);
+  }
+  .upload-btn:hover { border-color: var(--accent); color: var(--ink); }
+  #img-preview-wrap { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; }
+  #img-preview { width: 120px; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .badge { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+  .img-meta { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 160px; }
+
+  .preview-card {
+    background: #1C1630; border: 1px solid #35294F; border-radius: 16px; padding: 20px 22px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+  }
+  .pv-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 10px; }
+  .pv-date { font-family: var(--mono); font-size: 12.5px; color: #8F85A6; }
+  .pv-cat {
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 999px; background: #2A2145; color: #B9A3FF;
+  }
+  .pv-title { font-size: 20px; font-weight: 700; margin: 0 0 6px; color: #F1ECFA; letter-spacing: -0.01em; }
+  .pv-desc { font-size: 14px; line-height: 1.6; color: #A79DBE; margin: 0 0 12px; }
+  .pv-skills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pv-skill {
+    font-family: var(--mono); font-size: 11.5px; padding: 3px 9px; border-radius: 7px;
+    background: #231C39; color: #C9C0DC; border: 1px solid #35294F;
+  }
+  .pv-note { font-size: 12px; color: #8F85A6; margin-top: 10px; font-style: italic; }
+
+  .out {
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.55; color: var(--muted);
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px; white-space: pre-wrap; overflow-wrap: break-word;
+    max-height: 300px; overflow: auto; margin: 0 0 12px;
+  }
+  details { margin-top: 18px; }
+  summary { cursor: pointer; font-size: 13.5px; color: var(--muted); }
+  details .out { margin-top: 12px; }
+</style>
+
+<div class="shell">
+  <header>
+    <h1>Milestone Composer<span class="dot">.</span></h1>
+    <p class="lede">Add new milestones, edit existing ones, and attach screenshots — in rough English (or Arabic). Claude corrects the grammar, rephrases it in the site's voice, expands it with what it knows, and publishes to <a href="https://muhammadbahaa.github.io/ai-learning-milestones/" target="_blank" rel="noopener">your live timeline</a>.</p>
+  </header>
+
+  <div class="steps">
+    <span class="step"><span class="n">1</span><span><b>Fill</b> or <b>pick</b> a milestone</span></span>
+    <span class="step"><span class="n">2</span><span><b>Copy</b> the request</span></span>
+    <span class="step"><span class="n">3</span><span><b>Paste</b> to Claude Code</span></span>
+    <span class="step"><span class="n">4</span><span><b>Live</b> in ~1 minute 🚀</span></span>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-new" type="button">✍️ New milestone</button>
+    <button class="tab" id="tab-edit" type="button">📋 Edit existing</button>
+    <span class="snapshot">__SNAPSHOT_META__</span>
+  </div>
+
+  <div class="cols">
+    <section class="panel" aria-label="Milestone form">
+
+      <div class="banner" id="banner" hidden>
+        <span>Editing <b id="banner-label"></b></span>
+        <button id="cancel-edit" type="button">Back to list</button>
+      </div>
+
+      <div id="view-list" hidden>
+        <h2>Pick a milestone to edit</h2>
+        <input class="search" id="f-search" placeholder="Search title, category, or date…">
+        <div class="list" id="list"></div>
+      </div>
+
+      <div id="view-form">
+        <h2 id="form-heading">Your rough notes</h2>
+
+        <div class="field">
+          <label for="f-title">Title</label>
+          <input id="f-title" placeholder="e.g. Built my first MCP server">
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="f-date">Date</label>
+            <input id="f-date" placeholder="4 Jun 2026 · Jun 2026 - Present">
+          </div>
+          <div class="field">
+            <label for="f-category">Category</label>
+            <input id="f-category" list="cats" placeholder="pick or type your own">
+            <datalist id="cats">
+              <option>Foundations</option><option>Context Engineering</option><option>Learning</option>
+              <option>Skills &amp; Plugins</option><option>Subscriptions</option><option>Agentic Coding</option>
+              <option>Engineering Harness</option><option>Design Automation</option><option>Localization Automation</option>
+              <option>Agent Architecture</option><option>Agent Orchestration</option><option>Continuous Learning</option>
+              <option>Automation &amp; MCP</option><option>Personal AI Systems</option><option>Product Building</option>
+              <option>Journey</option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-desc">Description <span class="soft">— rough is fine</span></label>
+          <textarea id="f-desc" placeholder="e.g. i tried plan mode in claude code and it help me alot to not jump to code directly"></textarea>
+          <p class="hint">Don't polish it yourself. Claude fixes the English and adds accurate detail about tools it knows — it won't invent personal claims or numbers you didn't state.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-skills">Skills <span class="soft">(comma-separated, optional)</span></label>
+          <input id="f-skills" placeholder="empty = let Claude suggest from the description">
+        </div>
+
+        <div class="field">
+          <label for="f-resources">Resources <span class="soft">(one per line, optional)</span></label>
+          <textarea id="f-resources" style="min-height:64px" placeholder="my-skill-name
+Course certificate | https://example.com/cert"></textarea>
+          <p class="hint">Plain name = reference note · add <span style="font-family:var(--mono)">| https://…</span> to make it a link.</p>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="f-att-file">Attachment label <span class="soft">(optional)</span></label>
+            <input id="f-att-file" placeholder="welcome-to-something.eml">
+          </div>
+          <div class="field">
+            <label for="f-att-note">Attachment caption</label>
+            <input id="f-att-note" placeholder="a funny one-liner">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Attachment screenshot <span class="soft">(optional)</span></label>
+          <div class="upload-row">
+            <label class="upload-btn" for="f-att-img">📤 Choose image…</label>
+            <input type="file" id="f-att-img" accept="image/*" hidden>
+            <span id="img-state" class="hint" style="margin:0">no image chosen</span>
+          </div>
+          <div id="img-preview-wrap" hidden>
+            <img id="img-preview" alt="Attachment preview">
+            <div class="img-meta">
+              <div>
+                <label for="f-img-name">Save in repo as</label>
+                <input id="f-img-name">
+              </div>
+              <span class="badge" id="img-size"></span>
+              <div><button id="img-remove" class="danger" type="button">✕ Remove image</button></div>
+            </div>
+          </div>
+          <p class="hint">Compressed in your browser (JPEG, max 1200px wide). It travels inside the copied request — Claude saves it to <span style="font-family:var(--mono)">attachments/</span> and makes the 📎 chip clickable.</p>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="copy-main" type="button">Copy request for Claude</button>
+          <button id="copy-remove" class="danger" type="button" hidden>Copy removal request</button>
+          <button id="clear" type="button">Clear</button>
+          <span class="copied" id="copied" hidden>Copied ✓ — now paste it to Claude Code</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Preview and output">
+      <h2>Site preview <span style="color:var(--faint);font-weight:400">(before Claude's polish)</span></h2>
+      <div class="preview-card">
+        <div class="pv-meta">
+          <span class="pv-date" id="pv-date">date</span>
+          <span class="pv-cat" id="pv-cat">category</span>
+        </div>
+        <p class="pv-title" id="pv-title">Your milestone title</p>
+        <p class="pv-desc" id="pv-desc">Your description appears here — Claude's version will be sharper and richer.</p>
+        <div class="pv-skills" id="pv-skills"></div>
+        <p class="pv-note" id="pv-note" hidden></p>
+      </div>
+
+      <details open>
+        <summary>The request that gets copied</summary>
+        <div class="out" id="out-request"></div>
+      </details>
+
+      <details>
+        <summary>Raw milestones.js entry (your exact words, no polish)</summary>
+        <div class="out" id="out-raw"></div>
+        <div class="btns"><button id="copy-raw" type="button">Copy raw entry</button></div>
+      </details>
+    </section>
+  </div>
+</div>
+
+<script>window.EXISTING = /*__DATA__*/[];</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
+  var fields = ['f-title', 'f-date', 'f-category', 'f-desc', 'f-skills', 'f-resources', 'f-att-file', 'f-att-note'];
+  var KEY = 'milestone-composer-draft-v2';
+  var mode = { type: 'new', index: -1 };
+  var image = null; // { dataUrl, kb }
+  var existingImagePath = ''; // for edit mode
+
+  function val(id) { return $(id).value.trim(); }
+  function q(s) { return "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'"; }
+  function slug(s) {
+    return String(s || '').toLowerCase().replace(/\.[a-z0-9]+$/, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'attachment';
+  }
+  function parseSkills() {
+    return val('f-skills') ? val('f-skills').split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+  }
+  function parseResources() {
+    return val('f-resources') ? val('f-resources').split('\n').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+  }
+  function imgRepoPath() { return 'attachments/' + (val('f-img-name') || slug(val('f-att-file') || val('f-title')) + '.jpg'); }
+
+  // ---------- request builders ----------
+  function fieldLines() {
+    var lines = [];
+    lines.push('title: ' + (val('f-title') || '(missing — ask me)'));
+    lines.push('date: ' + (val('f-date') || '(missing — ask me)'));
+    lines.push('category: ' + (val('f-category') || '(pick the best fit)'));
+    lines.push('description (rough): ' + (val('f-desc') || '(missing — ask me)'));
+    lines.push('skills: ' + (parseSkills().join(', ') || '(suggest from the description)'));
+    var res = parseResources();
+    lines.push('resources: ' + (res.length ? res.join(' ; ') : '(none)'));
+    if (val('f-att-file') || val('f-att-note')) {
+      lines.push('attachment: file=' + (val('f-att-file') || '(name it)') + ' — caption: ' + (val('f-att-note') || '(write a playful one)'));
+    }
+    return lines;
+  }
+  function imageBlock() {
+    if (!image) return [];
+    return ['', '--- attachment image (base64 JPEG data URL) ---',
+      'save as: ' + imgRepoPath(),
+      image.dataUrl,
+      '--- end attachment image ---'];
+  }
+  var FOOTER = 'Finally: verify locally, push, confirm the live URL, and rebuild + republish the Milestone Composer snapshot (tools/build-composer.mjs).';
+  var POLISH = 'My rough input — please: correct my English, rephrase it in the site’s voice, and expand the description using your own knowledge of the tools/concepts I mention (stay accurate; do not invent personal claims, metrics, or results I didn’t state):';
+
+  function buildRequest() {
+    var orig = mode.type === 'edit' ? EXISTING[mode.index] : null;
+    var lines = [];
+    if (orig) {
+      lines.push('Update an existing milestone on my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones, data file milestones.js).');
+      lines.push('Original entry: "' + orig.title + '" (date ' + orig.date + ').');
+      lines.push('');
+      lines.push(POLISH.replace('My rough input', 'My edited values') + ' Only apply what actually changed, and re-sort chronologically if the date changed.');
+    } else {
+      lines.push('Add a milestone to my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones, data file milestones.js). Insert it at the right chronological position.');
+      lines.push('');
+      lines.push(POLISH);
+    }
+    lines.push('');
+    lines = lines.concat(fieldLines());
+    if (mode.type === 'edit' && existingImagePath && !image) {
+      lines.push('attachment image: keep the current one (' + existingImagePath + ')');
+    }
+    lines = lines.concat(imageBlock());
+    lines.push('');
+    lines.push(FOOTER);
+    return lines.join('\n');
+  }
+  function buildRemoveRequest() {
+    var orig = EXISTING[mode.index];
+    return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones).\n\n' + FOOTER;
+  }
+  function buildRaw() {
+    var skills = parseSkills();
+    var res = parseResources().map(function (r) {
+      var parts = r.split('|').map(function (p) { return p.trim(); });
+      return parts.length > 1 ? '{ label: ' + q(parts[0]) + ', url: ' + q(parts[1]) + ' }' : q(parts[0]);
+    });
+    var out = [];
+    out.push('{');
+    out.push('  title: ' + q(val('f-title') || 'Untitled') + ',');
+    out.push('  date: ' + q(val('f-date') || 'Jul 2026') + ',');
+    out.push('  category: ' + q(val('f-category') || 'Learning') + ',');
+    out.push('  description: ' + q(val('f-desc') || '') + ',');
+    out.push('  skills: [' + skills.map(q).join(', ') + '],');
+    out.push('  resources: [' + res.join(', ') + '],');
+    if (val('f-att-file')) {
+      out.push('  attachment: {');
+      out.push('    file: ' + q(val('f-att-file')) + ',');
+      if (val('f-att-note')) out.push('    note: ' + q(val('f-att-note')) + ',');
+      var img = image ? imgRepoPath() : existingImagePath;
+      if (img) out.push('    image: ' + q(img) + ',');
+      out.push('  },');
+    }
+    out.push('},');
+    return out.join('\n');
+  }
+
+  // ---------- rendering ----------
+  function render() {
+    $('pv-date').textContent = val('f-date') || 'date';
+    $('pv-cat').textContent = val('f-category') || 'category';
+    $('pv-title').textContent = val('f-title') || 'Your milestone title';
+    $('pv-desc').textContent = val('f-desc') || 'Your description appears here — Claude’s version will be sharper and richer.';
+    var wrap = $('pv-skills');
+    wrap.innerHTML = '';
+    parseSkills().forEach(function (s) {
+      var el = document.createElement('span');
+      el.className = 'pv-skill'; el.textContent = s;
+      wrap.appendChild(el);
+    });
+    var noteEl = $('pv-note');
+    if (val('f-att-file')) {
+      noteEl.hidden = false;
+      noteEl.textContent = '📎 ' + val('f-att-file') + (val('f-att-note') ? ' — ' + val('f-att-note') : '');
+    } else { noteEl.hidden = true; }
+    $('out-request').textContent = buildRequest();
+    $('out-raw').textContent = buildRaw();
+    if (mode.type === 'new') {
+      try { localStorage.setItem(KEY, JSON.stringify(fields.map(function (f) { return $(f).value; }))); } catch (e) {}
+    }
+  }
+
+  function renderList() {
+    var query = val('f-search').toLowerCase();
+    var list = $('list');
+    list.innerHTML = '';
+    EXISTING.forEach(function (m, i) {
+      var hay = (m.title + ' ' + m.category + ' ' + m.date).toLowerCase();
+      if (query && hay.indexOf(query) === -1) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'list-item';
+      var num = document.createElement('span');
+      num.className = 'li-num'; num.textContent = String(i + 1).padStart(2, '0');
+      var t = document.createElement('span');
+      t.className = 'li-title'; t.textContent = (m.attachment ? '📎 ' : '') + m.title;
+      var d = document.createElement('span');
+      d.className = 'li-date'; d.textContent = m.date;
+      b.appendChild(num); b.appendChild(t); b.appendChild(d);
+      b.addEventListener('click', function () { startEdit(i); });
+      list.appendChild(b);
+    });
+    if (!list.children.length) {
+      var empty = document.createElement('p');
+      empty.className = 'hint'; empty.textContent = 'No milestone matches that search.';
+      list.appendChild(empty);
+    }
+  }
+
+  // ---------- modes ----------
+  function setImage(next) {
+    image = next;
+    $('img-preview-wrap').hidden = !image;
+    if (image) {
+      $('img-preview').src = image.dataUrl;
+      $('img-size').textContent = image.kb + ' KB after compression';
+      if (!$('f-img-name').value) $('f-img-name').value = slug(val('f-att-file') || val('f-title')) + '.jpg';
+      $('img-state').textContent = 'image ready';
+    } else {
+      $('img-state').textContent = existingImagePath ? 'current: ' + existingImagePath + ' (upload to replace)' : 'no image chosen';
+      $('f-img-name').value = '';
+    }
+    render();
+  }
+
+  function fillForm(m) {
+    $('f-title').value = m.title || '';
+    $('f-date').value = m.date || '';
+    $('f-category').value = m.category || '';
+    $('f-desc').value = m.description || '';
+    $('f-skills').value = (m.skills || []).join(', ');
+    $('f-resources').value = (m.resources || []).map(function (r) {
+      return typeof r === 'string' ? r : (r.label + (r.url ? ' | ' + r.url : ''));
+    }).join('\n');
+    $('f-att-file').value = (m.attachment && m.attachment.file) || '';
+    $('f-att-note').value = (m.attachment && m.attachment.note) || '';
+  }
+
+  function startEdit(i) {
+    mode = { type: 'edit', index: i };
+    existingImagePath = (EXISTING[i].attachment && EXISTING[i].attachment.image) || '';
+    fillForm(EXISTING[i]);
+    setImage(null);
+    $('banner').hidden = false;
+    $('banner-label').textContent = '#' + String(i + 1).padStart(2, '0') + ' — ' + EXISTING[i].title;
+    $('view-list').hidden = true;
+    $('view-form').hidden = false;
+    $('form-heading').textContent = 'Edit, then copy the update request';
+    $('copy-main').textContent = 'Copy update request';
+    $('copy-remove').hidden = false;
+    $('clear').hidden = true;
+    render();
+  }
+
+  function showTab(which) {
+    $('tab-new').classList.toggle('active', which === 'new');
+    $('tab-edit').classList.toggle('active', which === 'edit');
+    $('banner').hidden = true;
+    $('copy-remove').hidden = true;
+    $('clear').hidden = false;
+    existingImagePath = '';
+    if (which === 'new') {
+      mode = { type: 'new', index: -1 };
+      $('view-list').hidden = true;
+      $('view-form').hidden = false;
+      $('form-heading').textContent = 'Your rough notes';
+      $('copy-main').textContent = 'Copy request for Claude';
+      restoreDraft();
+      setImage(null);
+    } else {
+      mode = { type: 'edit', index: -1 };
+      $('view-form').hidden = true;
+      $('view-list').hidden = false;
+      renderList();
+    }
+  }
+
+  function restoreDraft() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+      fields.forEach(function (f, i) { $(f).value = (saved && saved[i]) || ''; });
+    } catch (e) { fields.forEach(function (f) { $(f).value = ''; }); }
+    render();
+  }
+
+  // ---------- image processing ----------
+  function processImageFile(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onerror = function () { reject(new Error('Could not read the file.')); };
+      reader.onload = function () {
+        var img = new Image();
+        img.onerror = function () { reject(new Error('That file is not a readable image.')); };
+        img.onload = function () {
+          var scale = Math.min(1, 1200 / img.width, 1600 / img.height);
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          var dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          if (dataUrl.length > 850 * 1024) dataUrl = canvas.toDataURL('image/jpeg', 0.62);
+          if (dataUrl.length > 950 * 1024) { reject(new Error('Image is still too large — crop it tighter and retry.')); return; }
+          resolve({ dataUrl: dataUrl, kb: Math.round(dataUrl.length * 3 / 4 / 1024) });
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ---------- clipboard ----------
+  function copy(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  }
+  function fallbackCopy(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); done();
+  }
+  function flashCopied() {
+    var c = $('copied');
+    c.hidden = false;
+    clearTimeout(flashCopied.t);
+    flashCopied.t = setTimeout(function () { c.hidden = true; }, 3500);
+  }
+
+  // ---------- wiring ----------
+  $('tab-new').addEventListener('click', function () { showTab('new'); });
+  $('tab-edit').addEventListener('click', function () { showTab('edit'); });
+  $('cancel-edit').addEventListener('click', function () { showTab('edit'); });
+  $('f-search').addEventListener('input', renderList);
+  $('copy-main').addEventListener('click', function () { copy(buildRequest(), flashCopied); });
+  $('copy-remove').addEventListener('click', function () { copy(buildRemoveRequest(), flashCopied); });
+  $('copy-raw').addEventListener('click', function () { copy(buildRaw(), flashCopied); });
+  $('clear').addEventListener('click', function () {
+    fields.forEach(function (f) { $(f).value = ''; });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    setImage(null);
+  });
+  $('f-att-img').addEventListener('change', function () {
+    var file = this.files && this.files[0];
+    this.value = '';
+    if (!file) return;
+    $('img-state').textContent = 'compressing…';
+    processImageFile(file).then(setImage, function (err) {
+      setImage(null);
+      $('img-state').textContent = '⚠ ' + err.message;
+    });
+  });
+  $('img-remove').addEventListener('click', function () { setImage(null); });
+  $('f-img-name').addEventListener('input', render);
+  fields.forEach(function (f) { $(f).addEventListener('input', render); });
+
+  window.__composerTest = { processImageFile: processImageFile, buildRequest: buildRequest, startEdit: startEdit };
+
+  restoreDraft();
+  render();
+})();
+</script>

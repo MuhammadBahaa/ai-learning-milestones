@@ -80,7 +80,7 @@ window.MILESTONES = [
     resources: [],
   },
   {
-    title: 'Subscribed to Cursor',
+    title: 'Going steady with Cursor',
     date: '4 Apr 2026',
     category: 'Subscriptions',
     description: 'Upgraded from trial curiosity to a paid Cursor subscription — the first official line item in the AI tooling budget.',
@@ -106,7 +106,7 @@ window.MILESTONES = [
     resources: [],
   },
   {
-    title: 'Subscribed to Claude Pro',
+    title: 'Moving in with Claude',
     date: '4 Jun 2026',
     category: 'Subscriptions',
     description: 'Subscribed to Claude Pro. The welcome email promised a first commit within five minutes — an accurate forecast, judging by the rest of this timeline.',
