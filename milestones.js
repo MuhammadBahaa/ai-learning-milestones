@@ -53,19 +53,6 @@ window.MILESTONES = [
     resources: [],
   },
   {
-    title: 'Project context tree',
-    date: 'Jan 2026 - Mar 2026',
-    category: 'Context Engineering',
-    description: 'Structured project knowledge as a context tree so AI agents could understand modules, business journeys, architectural decisions and relationships between components. This was created before adopting reusable agent skills.',
-    skills: [
-      'Context trees',
-      'Project documentation',
-      'Agent context management',
-      'Knowledge structuring',
-    ],
-    resources: ['Neo-Agent-Context.md'],
-  },
-  {
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
     category: 'Learning',
@@ -101,21 +88,6 @@ window.MILESTONES = [
       file: 'welcome-to-cursor.eml',
       note: 'Receipt attached — no going back after this one.',
     },
-  },
-  {
-    title: 'Agentic coding toolchain',
-    date: 'Apr 2026 - Present',
-    category: 'Agentic Coding',
-    description: 'Expanded from individual AI assistants into an agentic coding toolchain involving ChatGPT, Codex, Claude Code, Cursor, Copilot and Gemini. Began selecting tools according to autonomy, planning quality, code-review capability, context handling and suitability for different engineering tasks.',
-    skills: [
-      'Claude Code',
-      'Codex',
-      'Cursor',
-      'GitHub Copilot',
-      'Gemini',
-      'Agent selection',
-    ],
-    resources: [],
   },
   {
     title: 'Cursor-based agent workflows',
