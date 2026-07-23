@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My AI Learning Journey — Milestones</title>
+<meta name="description" content="A personal log of my AI learning milestones — courses, builds, and CV-worthy proof of work.">
+<meta name="theme-color" content="#120E1C">
+<meta property="og:title" content="My AI Learning Journey — Milestones">
+<meta property="og:description" content="A personal log of my AI learning milestones — courses, builds, and CV-worthy proof of work.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #8B6CFF; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #120E1C; }
+  a { color: #A78BFF; text-decoration: none; }
+  a:hover { color: #C9B6FF; text-decoration: underline; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .rise { animation: rise .5s ease both; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rise { animation: none; }
+  }
+
+  .page {
+    min-height: 100vh; font-family: 'Spline Sans', sans-serif; color: #F1ECFA;
+    padding: 0 24px 96px;
+    background-image: radial-gradient(#241D36 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  header { padding-top: 64px; margin-bottom: 28px; }
+  .badges { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .pill-log {
+    font-family: 'Spline Sans Mono', monospace; font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; background: #F1ECFA; color: #120E1C; padding: 6px 12px; border-radius: 999px;
+  }
+  .counter {
+    font-family: 'Spline Sans Mono', monospace; font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; color: #8F85A6;
+  }
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+    font-size: clamp(44px, 7vw, 72px); line-height: 1.02; margin: 0 0 16px; letter-spacing: -0.02em;
+  }
+  h1 .dot { color: var(--accent); }
+  .tagline { font-size: 18px; line-height: 1.6; color: #A79DBE; margin: 0; max-width: 54ch; text-wrap: pretty; }
+
+  nav {
+    position: sticky; top: 0; z-index: 10; margin: 0 -12px 44px; padding: 14px 12px;
+    background: rgba(18, 14, 28, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid #2B2142; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+  }
+  .nav-label {
+    font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: .12em;
+    text-transform: uppercase; color: #8F85A6;
+  }
+  .nav-year { display: flex; align-items: center; gap: 8px; }
+  .nav-year-label { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; color: var(--accent); }
+  .nav-months { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nav-btn {
+    font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; font-weight: 500;
+    padding: 5px 11px; border-radius: 999px; background: #1C1630; color: #C9C0DC;
+    border: 1px solid #35294F; cursor: pointer;
+  }
+  .nav-btn:hover { background: #2A2145; color: #F1ECFA; border-color: var(--accent); }
+
+  .timeline { position: relative; padding-left: 44px; }
+  .rail { position: absolute; left: 15px; top: 8px; bottom: 8px; width: 0; border-left: 3px dotted #3B2F58; }
+
+  article { position: relative; margin-bottom: 36px; scroll-margin-top: 76px; }
+  .dot-num {
+    position: absolute; left: -44px; top: 2px; width: 33px; height: 33px; border-radius: 50%;
+    border: 3px solid #120E1C; display: flex; align-items: center; justify-content: center;
+    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 14px;
+  }
+  .card {
+    background: #1C1630; border: 1px solid #35294F; border-radius: 18px; padding: 24px 26px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .04);
+  }
+  .card-planned { opacity: .78; }
+
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .date { font-family: 'Spline Sans Mono', monospace; font-size: 13px; font-weight: 500; color: #8F85A6; }
+  .status { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+  .status-done { background: #123527; color: #5FE3A1; border: 1px solid #1E5B41; }
+  .status-progress { background: #3A2C10; color: #FFC95C; border: 1px solid #6B5320; }
+  .status-planned { background: #231C39; color: #8F85A6; border: 1px dashed #4A3D6B; }
+  .category { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #2A2145; color: #B9A3FF; }
+  .cv-badge {
+    font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 4px 12px; border-radius: 999px;
+    background: #FFD84D; color: #120E1C; border: 2px solid #120E1C; transform: rotate(-2deg);
+    box-shadow: 2px 2px 0 rgba(255, 216, 77, .35);
+  }
+
+  h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; color: #F1ECFA; }
+  .desc { font-size: 15.5px; line-height: 1.65; color: #A79DBE; margin: 0 0 16px; text-wrap: pretty; }
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .skill {
+    font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 4px 10px;
+    border-radius: 8px; background: #231C39; color: #C9C0DC; border: 1px solid #35294F;
+  }
+  .resources { display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .resources a { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+
+  .next { position: relative; }
+  .next-dot {
+    position: absolute; left: -44px; top: 0; width: 33px; height: 33px; border-radius: 50%;
+    background: #120E1C; border: 3px dashed #3B2F58; display: flex; align-items: center;
+    justify-content: center; color: #8F85A6; font-size: 16px;
+  }
+  .next p { margin: 6px 0 0; font-family: 'Spline Sans Mono', monospace; font-size: 14px; color: #8F85A6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="wrap">
+
+    <header class="rise">
+      <div class="badges">
+        <span class="pill-log">Private log</span>
+        <span class="counter" id="unlock-counter"></span>
+      </div>
+      <h1>My AI learning<br>journey<span class="dot">.</span></h1>
+      <p class="tagline">Every milestone is a step closer. The starred ones are CV-worthy — proof of work I can show off in my portfolio.</p>
+    </header>
+
+    <nav id="month-nav">
+      <span class="nav-label">Jump to</span>
+    </nav>
+
+    <div class="timeline">
+      <div class="rail"></div>
+      <div id="items"></div>
+      <div class="next rise">
+        <div class="next-dot">?</div>
+        <p>Next milestone loading… keep going 🚀</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<noscript>
+  <div style="max-width: 760px; margin: 24px auto; padding: 0 24px; color: #F1ECFA; font-family: sans-serif;">
+    This page needs JavaScript to render the milestone timeline.
+  </div>
+</noscript>
+
+<script src="./milestones.js"></script>
+<script>
+(function () {
+  var cfg = Object.assign({ accentColor: '#8B6CFF', newestFirst: false }, window.CONFIG || {});
+  document.documentElement.style.setProperty('--accent', cfg.accentColor);
+
+  var itemsEl = document.getElementById('items');
+  var navEl = document.getElementById('month-nav');
+  var counterEl = document.getElementById('unlock-counter');
+
+  var data = Array.isArray(window.MILESTONES) ? window.MILESTONES : null;
+  if (!data) {
+    itemsEl.innerHTML =
+      '<article><div class="card"><h2>Couldn’t load milestones</h2>' +
+      '<p class="desc">Check <span class="skill">milestones.js</span> for a syntax error — ' +
+      'usually a missing comma, quote, or bracket in the last entry added.</p></div></article>';
+    return;
+  }
+
+  var STATUS = {
+    done:     { label: 'Done',        cls: 'status-done',     dotBg: '#1FA968', dotFg: '#08130D', ring: '#1FA968', planned: false },
+    progress: { label: 'In progress', cls: 'status-progress', dotBg: '#F5B93F', dotFg: '#120E1C', ring: '#F5B93F', planned: false },
+    planned:  { label: 'Planned',     cls: 'status-planned',  dotBg: '#1C1630', dotFg: '#8F85A6', ring: '#4A3D6B', planned: true }
+  };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function monthYear(d) {
+    var p = String(d).trim().split(/\s+/);
+    return p.length === 3 ? [p[1], p[2]] : [p[0], p[1]];
+  }
+
+  var items = data.map(function (m, i) { return { m: m, num: i + 1 }; });
+  if (cfg.newestFirst) items.reverse();
+
+  var seen = {};
+  var yearOrder = [];
+  var yearMonths = {};
+  var html = '';
+
+  items.forEach(function (it) {
+    var m = it.m;
+    var s = STATUS[m.status] || STATUS.planned;
+    var my = monthYear(m.date || '');
+    var month = my[0] || '';
+    var year = my[1] || '';
+    var monthKey = ('ms-' + month + '-' + year).toLowerCase();
+    var anchorId = 'ms-' + (it.num - 1);
+    if (month && year && !seen[monthKey]) {
+      seen[monthKey] = true;
+      anchorId = monthKey;
+      if (!yearMonths[year]) { yearMonths[year] = []; yearOrder.push(year); }
+      yearMonths[year].push({ label: month, target: monthKey });
+    }
+
+    var ring = (m.status === 'done' && m.cvWorthy) ? 'var(--accent)' : s.ring;
+    var skills = Array.isArray(m.skills) ? m.skills : [];
+    var resources = Array.isArray(m.resources) ? m.resources : [];
+
+    html +=
+      '<article id="' + esc(anchorId) + '" class="rise">' +
+        '<div class="dot-num" style="background:' + esc(s.dotBg) + ';color:' + esc(s.dotFg) + ';box-shadow:0 0 0 3px ' + ring + ';">' +
+          String(it.num).padStart(2, '0') +
+        '</div>' +
+        '<div class="card' + (s.planned ? ' card-planned' : '') + '">' +
+          '<div class="meta">' +
+            '<span class="date">' + esc(m.date) + '</span>' +
+            '<span class="status ' + s.cls + '">' + s.label + '</span>' +
+            '<span class="category">' + esc(m.category) + '</span>' +
+            (m.cvWorthy ? '<span class="cv-badge">★ CV-worthy</span>' : '') +
+          '</div>' +
+          '<h2>' + esc(m.title) + '</h2>' +
+          '<p class="desc">' + esc(m.description) + '</p>' +
+          (skills.length ?
+            '<div class="skills">' + skills.map(function (sk) {
+              return '<span class="skill">' + esc(sk) + '</span>';
+            }).join('') + '</div>' : '') +
+          (resources.length ?
+            '<div class="resources">' + resources.map(function (r) {
+              return '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">↗ ' + esc(r.label) + '</a>';
+            }).join('') + '</div>' : '') +
+        '</div>' +
+      '</article>';
+  });
+
+  itemsEl.innerHTML = html;
+
+  var navHtml = '';
+  yearOrder.forEach(function (year) {
+    navHtml +=
+      '<div class="nav-year">' +
+        '<span class="nav-year-label">' + esc(year) + '</span>' +
+        '<div class="nav-months">' +
+          yearMonths[year].map(function (mo) {
+            return '<button type="button" class="nav-btn" data-target="' + esc(mo.target) + '">' + esc(mo.label) + '</button>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+  });
+  navEl.insertAdjacentHTML('beforeend', navHtml);
+
+  navEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-target]');
+    if (!btn) return;
+    var el = document.getElementById(btn.getAttribute('data-target'));
+    if (!el) return;
+    var top = el.getBoundingClientRect().top + window.scrollY - 76;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  });
+
+  var doneCount = data.filter(function (m) { return m.status === 'done'; }).length;
+  counterEl.textContent = doneCount + ' of ' + data.length + ' unlocked';
+})();
+</script>
+</body>
+</html>

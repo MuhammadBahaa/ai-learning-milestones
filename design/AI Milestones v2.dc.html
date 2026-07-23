@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #120E1C; }
+  a { color: #A78BFF; text-decoration: none; }
+  a:hover { color: #C9B6FF; text-decoration: underline; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+<div style="min-height: 100vh; font-family: 'Spline Sans', sans-serif; color: #F1ECFA; padding: 0 24px 96px; background-image: radial-gradient(#241D36 1.2px, transparent 1.2px); background-size: 26px 26px;">
+  <div style="max-width: 760px; margin: 0 auto;">
+    <header style="padding-top: 64px; margin-bottom: 28px; animation: rise .5s ease both;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; background: #F1ECFA; color: #120E1C; padding: 6px 12px; border-radius: 999px;">Private log</span>
+        <span style="font-family: 'Spline Sans Mono', monospace; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: #8F85A6;">{{ doneCount }} of {{ totalCount }} unlocked</span>
+      </div>
+      <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 7vw, 72px); line-height: 1.02; margin: 0 0 16px; letter-spacing: -0.02em;">My AI learning<br>journey<span style="color: #8B6CFF;">.</span></h1>
+      <p style="font-size: 18px; line-height: 1.6; color: #A79DBE; margin: 0; max-width: 54ch; text-wrap: pretty;">Every milestone is a step closer. The starred ones are CV-worthy — proof of work I can show off in my portfolio.</p>
+    </header>
+    <nav style="position: sticky; top: 0; z-index: 10; margin: 0 -12px 44px; padding: 14px 12px; background: rgba(18, 14, 28, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid #2B2142; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;">
+      <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #8F85A6;">Jump to</span>
+      <sc-for list="{{ navYears }}" as="y" hint-placeholder-count="1">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; color: #8B6CFF;">{{ y.year }}</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <sc-for list="{{ y.months }}" as="mo" hint-placeholder-count="4">
+              <button onClick="{{ mo.jump }}" style="font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 999px; background: #1C1630; color: #C9C0DC; border: 1px solid #35294F; cursor: pointer;" style-hover="background: #2A2145; color: #F1ECFA; border: 1px solid #8B6CFF;">{{ mo.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="position: relative; padding-left: 44px;">
+      <div style="position: absolute; left: 15px; top: 8px; bottom: 8px; width: 0; border-left: 3px dotted #3B2F58;"></div>
+      <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="5">
+        <article id="{{ m.anchorId }}" style="position: relative; margin-bottom: 36px; scroll-margin-top: 76px; animation: rise .5s ease both;">
+          <div style="position: absolute; left: -44px; top: 2px; width: 33px; height: 33px; border-radius: 50%; background: {{ m.dotBg }}; border: 3px solid #120E1C; box-shadow: 0 0 0 3px {{ m.dotRing }}; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 14px; color: {{ m.dotFg }};">{{ m.num }}</div>
+          <div style="background: #1C1630; border: 1px solid #35294F; border-radius: 18px; padding: 24px 26px; box-shadow: 0 12px 32px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .04); opacity: {{ m.cardOpacity }};">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="font-family: 'Spline Sans Mono', monospace; font-size: 13px; font-weight: 500; color: #8F85A6;">{{ m.date }}</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: {{ m.statusBg }}; color: {{ m.statusFg }}; border: {{ m.statusBorder }};">{{ m.statusLabel }}</span>
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #2A2145; color: #B9A3FF;">{{ m.category }}</span>
+              <sc-if value="{{ m.cvWorthy }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 4px 12px; border-radius: 999px; background: #FFD84D; color: #120E1C; border: 2px solid #120E1C; transform: rotate(-2deg); box-shadow: 2px 2px 0 rgba(255, 216, 77, .35);">★ CV-worthy</span>
+              </sc-if>
+            </div>
+            <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; color: #F1ECFA;">{{ m.title }}</h2>
+            <p style="font-size: 15.5px; line-height: 1.65; color: #A79DBE; margin: 0 0 16px; text-wrap: pretty;">{{ m.description }}</p>
+            <sc-if value="{{ m.hasSkills }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+                <sc-for list="{{ m.skills }}" as="skill" hint-placeholder-count="3">
+                  <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 4px 10px; border-radius: 8px; background: #231C39; color: #C9C0DC; border: 1px solid #35294F;">{{ skill }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ m.hasResources }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px;">
+                <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="1">
+                  <a href="{{ r.url }}" target="_blank" style="font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">↗ {{ r.label }}</a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+      <div style="position: relative; animation: rise .5s ease both;">
+        <div style="position: absolute; left: -44px; top: 0; width: 33px; height: 33px; border-radius: 50%; background: #120E1C; border: 3px dashed #3B2F58; display: flex; align-items: center; justify-content: center; color: #8F85A6; font-size: 16px;">?</div>
+        <p style="margin: 6px 0 0; font-family: 'Spline Sans Mono', monospace; font-size: 14px; color: #8F85A6;">Next milestone loading… keep going 🚀</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#8B6CFF&quot;, &quot;options&quot;: [&quot;#8B6CFF&quot;, &quot;#FF6B4A&quot;, &quot;#2FD6A0&quot;, &quot;#FF4D9D&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Style&quot;}, &quot;newestFirst&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Order&quot;}}">
+class Component extends DCLogic {
+  // ======================================================================
+  // EDIT YOUR MILESTONES HERE (newest last). Fields:
+  //   title, date ('12 Jan 2026' — day optional), status: 'done' | 'progress' | 'planned',
+  //   category, description, skills: [..],
+  //   resources: [{label, url}], cvWorthy: true/false
+  // ======================================================================
+  static MILESTONES = [
+    {
+      title: 'Python foundations for AI',
+      date: '12 Jan 2026',
+      status: 'done',
+      category: 'Foundations',
+      description: 'Got comfortable with Python, NumPy and Pandas — the toolkit behind everything that follows.',
+      skills: ['Python', 'NumPy', 'Pandas'],
+      resources: [{ label: 'Course notes', url: '#' }],
+      cvWorthy: false,
+    },
+    {
+      title: 'Machine learning basics',
+      date: '25 Feb 2026',
+      status: 'done',
+      category: 'ML',
+      description: 'Finished an intro ML course: regression, classification, train/test splits, and evaluating models properly.',
+      skills: ['scikit-learn', 'Regression', 'Classification'],
+      resources: [],
+      cvWorthy: true,
+    },
+    {
+      title: 'First neural network from scratch',
+      date: '8 Apr 2026',
+      status: 'done',
+      category: 'Deep Learning',
+      description: 'Built and trained a small neural net by hand — backprop finally clicked.',
+      skills: ['PyTorch', 'Backpropagation'],
+      resources: [{ label: 'GitHub repo', url: '#' }],
+      cvWorthy: true,
+    },
+    {
+      title: 'Prompt engineering deep dive',
+      date: '15 Jun 2026',
+      status: 'progress',
+      category: 'LLMs',
+      description: 'Learning to design, test and iterate prompts — few-shot, chain-of-thought, and structured outputs.',
+      skills: ['Prompting', 'Evaluation'],
+      resources: [],
+      cvWorthy: false,
+    },
+    {
+      title: 'Build a RAG chatbot',
+      date: '1 Aug 2026',
+      status: 'planned',
+      category: 'LLMs',
+      description: 'A retrieval-augmented chatbot over my own notes — embeddings, vector search, and a clean chat UI.',
+      skills: ['RAG', 'Embeddings', 'Vector DB'],
+      resources: [],
+      cvWorthy: true,
+    },
+    {
+      title: 'Fine-tune a small model',
+      date: '10 Oct 2026',
+      status: 'planned',
+      category: 'Deep Learning',
+      description: 'Fine-tune an open-source model on a custom dataset and publish the results.',
+      skills: ['Fine-tuning', 'Hugging Face'],
+      resources: [],
+      cvWorthy: true,
+    },
+  ];
+
+  renderVals() {
+    const accent = this.props.accentColor ?? '#8B6CFF';
+    const newestFirst = this.props.newestFirst ?? false;
+    const STATUS = {
+      done:     { label: 'Done',        bg: '#123527', fg: '#5FE3A1', border: '1px solid #1E5B41', dotBg: '#1FA968', dotFg: '#08130D', ring: '#1FA968', opacity: 1 },
+      progress: { label: 'In progress', bg: '#3A2C10', fg: '#FFC95C', border: '1px solid #6B5320', dotBg: '#F5B93F', dotFg: '#120E1C', ring: '#F5B93F', opacity: 1 },
+      planned:  { label: 'Planned',     bg: '#231C39', fg: '#8F85A6', border: '1px dashed #4A3D6B', dotBg: '#1C1630', dotFg: '#8F85A6', ring: '#4A3D6B', opacity: 0.78 },
+    };
+    let list = Component.MILESTONES.slice();
+    if (newestFirst) list.reverse();
+    const monthYear = (d) => {
+      const p = d.trim().split(/\s+/);
+      return p.length === 3 ? [p[1], p[2]] : [p[0], p[1]];
+    };
+    const jumpTo = (id) => () => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 76;
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+    const seen = new Set();
+    const yearsMap = new Map();
+    const milestones = list.map((m) => {
+      const num = Component.MILESTONES.indexOf(m) + 1;
+      const s = STATUS[m.status] || STATUS.planned;
+      const [month, year] = monthYear(m.date);
+      const monthKey = ('ms-' + month + '-' + year).toLowerCase();
+      let anchorId = 'ms-' + (num - 1);
+      if (!seen.has(monthKey)) {
+        seen.add(monthKey);
+        anchorId = monthKey;
+        if (!yearsMap.has(year)) yearsMap.set(year, []);
+        yearsMap.get(year).push({ label: month, jump: jumpTo(monthKey) });
+      }
+      return {
+        ...m,
+        anchorId,
+        num: String(num).padStart(2, '0'),
+        statusLabel: s.label, statusBg: s.bg, statusFg: s.fg, statusBorder: s.border,
+        dotBg: s.dotBg, dotFg: s.dotFg, dotRing: s.ring === '#1FA968' && m.cvWorthy ? accent : s.ring,
+        cardOpacity: s.opacity,
+        hasSkills: (m.skills || []).length > 0,
+        hasResources: (m.resources || []).length > 0,
+      };
+    });
+    return {
+      milestones,
+      navYears: [...yearsMap.entries()].map(([year, months]) => ({ year, months })),
+      doneCount: Component.MILESTONES.filter(m => m.status === 'done').length,
+      totalCount: Component.MILESTONES.length,
+    };
+  }
+}
+</script>
+</body>
+</html>
