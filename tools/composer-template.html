@@ -183,7 +183,7 @@
 <div class="shell">
   <header>
     <h1>Milestone Composer<span class="dot">.</span></h1>
-    <p class="lede">Add new milestones, edit existing ones, and attach screenshots — in rough English (or Arabic). Claude corrects the grammar, rephrases it in the site's voice, expands it with what it knows, and publishes to <a href="https://muhammadbahaa.github.io/ai-learning-milestones/" target="_blank" rel="noopener">your live timeline</a>.</p>
+    <p class="lede">Add new milestones, edit existing ones, and attach screenshots — in rough English (or Arabic). Claude corrects the grammar, rephrases it in the site's voice, expands it with what it knows, and publishes to <a href="https://muhammadbahaa.github.io/autocomplete-to-autopilot/" target="_blank" rel="noopener">your live timeline</a>.</p>
   </header>
 
   <div class="steps">
@@ -380,12 +380,12 @@ Course certificate | https://example.com/cert"></textarea>
     var orig = mode.type === 'edit' ? EXISTING[mode.index] : null;
     var lines = [];
     if (orig) {
-      lines.push('Update an existing milestone on my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones, data file milestones.js).');
+      lines.push('Update an existing milestone on my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot, data file milestones.js).');
       lines.push('Original entry: "' + orig.title + '" (date ' + orig.date + ').');
       lines.push('');
       lines.push(POLISH.replace('My rough input', 'My edited values') + ' Only apply what actually changed, and re-sort chronologically if the date changed.');
     } else {
-      lines.push('Add a milestone to my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones, data file milestones.js). Insert it at the right chronological position.');
+      lines.push('Add a milestone to my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot, data file milestones.js). Insert it at the right chronological position.');
       lines.push('');
       lines.push(POLISH);
     }
@@ -401,7 +401,7 @@ Course certificate | https://example.com/cert"></textarea>
   }
   function buildRemoveRequest() {
     var orig = EXISTING[mode.index];
-    return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/ai-learning-milestones).\n\n' + FOOTER;
+    return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot).\n\n' + FOOTER;
   }
   function buildRaw() {
     var skills = parseSkills();

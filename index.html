@@ -46,7 +46,7 @@
   }
   h1 {
     font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
-    font-size: clamp(44px, 7vw, 72px); line-height: 1.02; margin: 0 0 16px; letter-spacing: -0.02em;
+    font-size: clamp(28px, 5.2vw, 44px); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.02em;
   }
   h1 .dot { color: var(--accent); }
   .tagline { font-size: 18px; line-height: 1.6; color: #A79DBE; margin: 0; max-width: 54ch; text-wrap: pretty; }
@@ -108,7 +108,13 @@
   .resources { display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px; }
   .resources a { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
   .resource-note { font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: #8F85A6; }
-  .attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .attachment-thumb {
+    height: 56px; width: auto; max-width: 140px; object-fit: cover; display: block;
+    border-radius: 8px; border: 1px solid #4A3D6B; cursor: zoom-in;
+    transition: border-color .15s ease;
+  }
+  .attachment-thumb:hover { border-color: var(--accent); }
   .attachment-chip {
     font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 5px 12px;
     border-radius: 10px; background: #231C39; color: #C9C0DC; border: 1px dashed #4A3D6B;
@@ -149,7 +155,7 @@
         <span class="pill-log">Private log</span>
         <span class="counter" id="unlock-counter"></span>
       </div>
-      <h1>From autocomplete<br>to autopilot<span class="dot">.</span></h1>
+      <h1>From autocomplete to autopilot<span class="dot">.</span></h1>
       <p class="tagline">Every milestone is a step closer.</p>
     </header>
 
@@ -281,6 +287,8 @@
             }).join('') + '</div>' : '') +
           (m.attachment && m.attachment.file ?
             '<div class="attachment">' +
+              (m.attachment.image ?
+                '<img class="attachment-thumb" src="' + esc(m.attachment.image) + '" alt="Attachment: ' + esc(m.attachment.file) + '" loading="lazy" onerror="this.remove()">' : '') +
               '<span class="attachment-chip"' + (m.attachment.image ? ' data-image="' + esc(m.attachment.image) + '"' : '') + '>📎 ' + esc(m.attachment.file) + '</span>' +
               (m.attachment.note ? '<span class="attachment-note">' + esc(m.attachment.note) + '</span>' : '') +
             '</div>' : '') +
@@ -336,6 +344,8 @@
   });
 
   itemsEl.addEventListener('click', function (e) {
+    var thumb = e.target.closest('.attachment-thumb');
+    if (thumb) { openLightbox(thumb.src, thumb.alt); return; }
     var chip = e.target.closest('.attachment-chip.is-clickable');
     if (chip) openLightbox(chip.getAttribute('data-image'), chip.textContent.trim());
   });

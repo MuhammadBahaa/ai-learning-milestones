@@ -1,8 +1,8 @@
-# AI Milestones
+# AI Milestones — from autocomplete to autopilot
 
 My personal AI learning journey, tracked milestone by milestone on a single page.
 
-**Live site:** https://muhammadbahaa.github.io/ai-learning-milestones/ *(after first publish — see below)*
+**Live site:** https://muhammadbahaa.github.io/autocomplete-to-autopilot/
 
 Designed in [Claude Design](https://claude.ai/design/p/d4541bde-cccb-4a71-b04d-52e697066dc4) (`AI Milestones v2.dc.html`, kept in [design/](design/) for reference) and implemented as a dependency-free static page: no build step, no framework — just `index.html` + `milestones.js`.
 
@@ -44,12 +44,6 @@ Open `index.html` in a browser, or:
 python3 -m http.server 4173
 ```
 
-## Publish (one-time setup)
+## Publish
 
-```bash
-gh repo create ai-learning-milestones --public --source . --push
-gh api repos/MuhammadBahaa/ai-learning-milestones/pages -X POST \
-  -f "source[branch]=main" -f "source[path]=/"
-```
-
-After that, every push to `main` redeploys the site automatically via GitHub Pages.
+Already set up: the repo is `MuhammadBahaa/autocomplete-to-autopilot` and every push to `main` redeploys the site automatically via GitHub Pages. (One-time setup was `gh repo create … --public --source . --push` followed by `gh api repos/…/pages -X POST -f "source[branch]=main" -f "source[path]=/"`.)
