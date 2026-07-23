@@ -439,10 +439,10 @@ window.MILESTONES = [
     resources: ['Life OS master-agent implementation plan'],
   },
   {
-    title: 'ReadCraft plugin definition',
-    date: 'Jul 21, 2026',
+    title: 'ReadCraft Plugin Released',
+    date: 'Jul 22, 2026',
     category: 'Product Building',
-    description: 'Defined the ReadCraft plugin around two core capabilities: reviewing skills and plugins with technical improvement suggestions, and helping humans understand and review complex English skill files more easily.',
+    description: 'Released the plugin publicly, built around two core capabilities: reviewing skills and plugins with technical improvement suggestions, and helping people read and review complex English skill files more easily. Announced the release publicly, which turned a design concept into a distributed, installable product.',
     skills: [
       'Plugin design',
       'Skill review',
@@ -451,6 +451,11 @@ window.MILESTONES = [
       'Instruction transformation',
     ],
     resources: ['Superpowers writing-skills'],
+    attachment: {
+      file: 'release-announcement.png',
+      note: 'Shipped it, then said it out loud. 🚀',
+      image: 'attachments/readcraft-plugin-released.jpg',
+    },
   },
   {
     title: 'From AI user to AI workflow builder',
