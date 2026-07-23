@@ -26,6 +26,16 @@ window.CONFIG = {
 
 window.MILESTONES = [
   {
+    title: 'AI Agent as shortcut',
+    date: '2025 - 2026',
+    status: 'done',
+    category: 'Foundations',
+    description: 'Used AI assistants — Copilot, Gemini and ChatGPT — as day-to-day shortcuts for code and answers, before thinking in workflows and agents.',
+    skills: ['Copilot', 'Gemini', 'ChatGPT'],
+    resources: [],
+    cvWorthy: false,
+  },
+  {
     title: 'Python foundations for AI',
     date: '12 Jan 2026',
     status: 'done',

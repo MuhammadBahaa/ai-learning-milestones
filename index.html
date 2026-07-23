@@ -202,9 +202,11 @@
     var my = monthYear(m.date || '');
     var month = my[0] || '';
     var year = my[1] || '';
+    // Only Month-Year style dates get a jump pill; ranges like '2025 - 2026' show verbatim on the card
+    var isAnchorable = /^[A-Za-z]/.test(month) && /^\d{4}$/.test(year);
     var monthKey = ('ms-' + month + '-' + year).toLowerCase();
     var anchorId = 'ms-' + (it.num - 1);
-    if (month && year && !seen[monthKey]) {
+    if (isAnchorable && !seen[monthKey]) {
       seen[monthKey] = true;
       anchorId = monthKey;
       if (!yearMonths[year]) { yearMonths[year] = []; yearOrder.push(year); }
