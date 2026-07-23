@@ -108,13 +108,32 @@
   .resources { display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px; }
   .resources a { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
   .resource-note { font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: #8F85A6; }
-  .attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .attachment { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px 16px; border-top: 1px dashed #35294F; padding-top: 12px; }
+  .attachment-thumb {
+    width: min(240px, 100%); height: auto; display: block; border-radius: 10px;
+    border: 1px solid #35294F; box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
+    transform: rotate(-1deg); cursor: zoom-in;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .attachment-thumb:hover { transform: rotate(0deg) scale(1.02); border-color: var(--accent); }
+  .attachment-meta { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
   .attachment-chip {
     font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 5px 12px;
     border-radius: 10px; background: #231C39; color: #C9C0DC; border: 1px dashed #4A3D6B;
     transform: rotate(-1deg); display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
   }
   .attachment-note { font-size: 13px; color: #8F85A6; font-style: italic; }
+  #lightbox {
+    position: fixed; inset: 0; z-index: 50; background: rgba(18, 14, 28, .9);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center; padding: 32px; cursor: zoom-out;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img {
+    max-width: min(1100px, 94vw); max-height: 88vh; border-radius: 12px;
+    border: 1px solid #4A3D6B; box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+  }
 
   .next { position: relative; }
   .next-dot {
@@ -153,6 +172,8 @@
 
   </div>
 </div>
+
+<div id="lightbox" role="dialog" aria-label="Attachment preview"><img id="lightbox-img" alt="Attachment preview"></div>
 
 <noscript>
   <div style="max-width: 760px; margin: 24px auto; padding: 0 24px; color: #F1ECFA; font-family: sans-serif;">
@@ -264,8 +285,12 @@
             }).join('') + '</div>' : '') +
           (m.attachment && m.attachment.file ?
             '<div class="attachment">' +
-              '<span class="attachment-chip">📎 ' + esc(m.attachment.file) + '</span>' +
-              (m.attachment.note ? '<span class="attachment-note">' + esc(m.attachment.note) + '</span>' : '') +
+              (m.attachment.image ?
+                '<img class="attachment-thumb" src="' + esc(m.attachment.image) + '" alt="Attachment: ' + esc(m.attachment.file) + '" loading="lazy" onerror="this.remove()">' : '') +
+              '<div class="attachment-meta">' +
+                '<span class="attachment-chip">📎 ' + esc(m.attachment.file) + '</span>' +
+                (m.attachment.note ? '<span class="attachment-note">' + esc(m.attachment.note) + '</span>' : '') +
+              '</div>' +
             '</div>' : '') +
         '</div>' +
       '</article>';
@@ -294,6 +319,20 @@
     if (!el) return;
     var top = el.getBoundingClientRect().top + window.scrollY - 76;
     window.scrollTo({ top: top, behavior: 'smooth' });
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  itemsEl.addEventListener('click', function (e) {
+    var thumb = e.target.closest('.attachment-thumb');
+    if (!thumb) return;
+    lightboxImg.src = thumb.src;
+    lightboxImg.alt = thumb.alt;
+    lightbox.classList.add('open');
+  });
+  lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
   });
 
   var anyStatus = data.some(function (m) { return m.status; });

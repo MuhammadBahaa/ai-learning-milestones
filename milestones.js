@@ -21,8 +21,10 @@
      status: 'done' | 'progress' | 'planned' — adds a status pill
        ('planned' renders dimmed).
      cvWorthy: true — adds the gold ★ CV-worthy badge.
-     attachment: { file: 'welcome.eml', note: 'a playful caption' }
-       — adds a 📎 email-style attachment chip at the card's bottom.
+     attachment: { file: 'welcome.eml', note: 'a playful caption',
+       image: 'attachments/pic.png' } — adds a 📎 email-style chip at
+       the card's bottom; with image, a clickable thumbnail opens it
+       full-size (missing image files degrade to the plain chip).
    ============================================================= */
 
 window.CONFIG = {
@@ -87,6 +89,7 @@ window.MILESTONES = [
     attachment: {
       file: 'welcome-to-cursor.eml',
       note: 'Receipt attached — no going back after this one.',
+      image: 'attachments/welcome-to-cursor.png',
     },
   },
   {
@@ -112,6 +115,7 @@ window.MILESTONES = [
     attachment: {
       file: 'welcome-to-claude-code.eml',
       note: '“Your Claude Code journey starts now.” — it really did. 🚀',
+      image: 'attachments/welcome-to-claude-code.png',
     },
   },
   {
