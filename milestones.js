@@ -40,7 +40,7 @@ window.MILESTONES = [
     date: 'Jan 2026 - Apr 2026',
     status: 'done',
     category: 'Foundations',
-    description: 'Moved from one-off prompts to context-aware AI work: fed the agent real project context and drove the big cards refactor with it — a deep, wide restructure that landed with only two bugs.',
+    description: 'Moved from one-off prompts to context-aware AI work: fed the agent real project context and drove the big cards refactor with it — a deep, wide restructure that landed with only two bugs. Built that context as a tree at first, without skills — until the end of March, when the skill concept caught my attention for the first time.',
     skills: [],
     resources: [],
     cvWorthy: false,
