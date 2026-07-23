@@ -17,12 +17,11 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
   category: 'LLMs',               // any short label
   description: 'One or two sentences about what you did and learned.',
   skills: ['Skill A', 'Skill B'],
-  resources: [{ label: 'GitHub repo', url: 'https://github.com/...' }],
-  cvWorthy: false,                // true = gold ★ CV-worthy badge
+  resources: ['artifact name', { label: 'GitHub repo', url: 'https://github.com/...' }],
 },
 ```
 
-Optionally an entry can carry `status: 'done' | 'progress' | 'planned'` — it adds a status pill, and `planned` entries render dimmed. Without it, entries are plain milestones.
+Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill (`planned` renders dimmed), and `cvWorthy: true` adds a gold ★ badge. Without them, entries are plain milestones.
 
 Three ways to do it, pick whichever is closest to hand:
 

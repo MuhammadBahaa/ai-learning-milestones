@@ -15,11 +15,12 @@
        'artifact or file name',      // plain string = reference note
        { label: 'GitHub repo', url: 'https://github.com/...' }, // object = link
      ],
-     cvWorthy: false,                // true = gold ★ CV-worthy badge
    },
 
-   Optional per entry: status: 'done' | 'progress' | 'planned' — adds a
-   status pill ('planned' renders dimmed). Omitted = plain milestone.
+   Optional per entry:
+     status: 'done' | 'progress' | 'planned' — adds a status pill
+       ('planned' renders dimmed).
+     cvWorthy: true — adds the gold ★ CV-worthy badge.
    ============================================================= */
 
 window.CONFIG = {
@@ -35,7 +36,6 @@ window.MILESTONES = [
     description: 'Used Copilot, Gemini and ChatGPT as day-to-day shortcuts for generating code, answering technical questions, rewriting communication and accelerating individual development tasks. At this stage, AI was mainly a faster assistant rather than part of a structured engineering workflow.',
     skills: ['GitHub Copilot', 'Gemini', 'ChatGPT', 'Prompting'],
     resources: [],
-    cvWorthy: false,
   },
   {
     title: 'Context-aware AI engineering',
@@ -49,7 +49,6 @@ window.MILESTONES = [
       'AI-assisted refactoring',
     ],
     resources: [],
-    cvWorthy: true,
   },
   {
     title: 'Project context tree',
@@ -63,7 +62,6 @@ window.MILESTONES = [
       'Knowledge structuring',
     ],
     resources: ['Neo-Agent-Context.md'],
-    cvWorthy: false,
   },
   {
     title: 'AI and Developer Productivity course',
@@ -76,7 +74,6 @@ window.MILESTONES = [
       'Artificial intelligence',
     ],
     resources: ['AI and Developer Productivity certificate'],
-    cvWorthy: true,
   },
   {
     title: 'Discovery of agent skills',
@@ -90,7 +87,6 @@ window.MILESTONES = [
       'Context efficiency',
     ],
     resources: [],
-    cvWorthy: false,
   },
   {
     title: 'Agentic coding toolchain',
@@ -106,7 +102,6 @@ window.MILESTONES = [
       'Agent selection',
     ],
     resources: [],
-    cvWorthy: false,
   },
   {
     title: 'Cursor-based agent workflows',
@@ -120,7 +115,6 @@ window.MILESTONES = [
       'AI-assisted coding',
     ],
     resources: [],
-    cvWorthy: false,
   },
   {
     title: 'Claude Code adoption',
@@ -135,7 +129,6 @@ window.MILESTONES = [
       'Terminal workflows',
     ],
     resources: ['Claude Pro', 'Claude Code'],
-    cvWorthy: false,
   },
   {
     title: 'Claude skills and plugins course',
@@ -152,7 +145,6 @@ window.MILESTONES = [
     resources: [
       'Claude - Master Claude Cowork, Claude Code, Skills & Plugins',
     ],
-    cvWorthy: true,
   },
   {
     title: 'Company engineering harness contribution',
@@ -167,7 +159,6 @@ window.MILESTONES = [
       'Workflow design',
     ],
     resources: ['CoorB engineering harness', 'Neo Android repository'],
-    cvWorthy: true,
   },
   {
     title: 'Android Figma extractor refactor',
@@ -182,7 +173,6 @@ window.MILESTONES = [
       'Design tokens',
     ],
     resources: ['android-figma-design-extractor'],
-    cvWorthy: true,
   },
   {
     title: 'Ledger-first Figma extraction',
@@ -197,7 +187,6 @@ window.MILESTONES = [
       'Implementation briefs',
     ],
     resources: ['android-figma-design-extractor'],
-    cvWorthy: true,
   },
   {
     title: 'Platform-agnostic Figma Design QA skill',
@@ -212,7 +201,6 @@ window.MILESTONES = [
       'Pre-development review',
     ],
     resources: ['figma-design-qa'],
-    cvWorthy: true,
   },
   {
     title: 'Approval-gated Figma comments',
@@ -226,7 +214,6 @@ window.MILESTONES = [
       'Design collaboration',
     ],
     resources: ['figma-design-qa', 'Figma MCP pull request'],
-    cvWorthy: true,
   },
   {
     title: 'Android code-versus-Figma comparison skill',
@@ -241,7 +228,6 @@ window.MILESTONES = [
       'Visual QA',
     ],
     resources: ['android-figma-comparison'],
-    cvWorthy: true,
   },
   {
     title: 'Design QA integration into feature development',
@@ -255,7 +241,6 @@ window.MILESTONES = [
       'Android feature development',
     ],
     resources: ['Android new-feature flow'],
-    cvWorthy: true,
   },
   {
     title: 'Neo Android translations plugin',
@@ -269,7 +254,6 @@ window.MILESTONES = [
       'Repository tooling',
     ],
     resources: ['coorb-neo-android'],
-    cvWorthy: true,
   },
   {
     title: 'Neo translations skill',
@@ -285,7 +269,6 @@ window.MILESTONES = [
       'Validation gates',
     ],
     resources: ['neo-translations'],
-    cvWorthy: true,
   },
   {
     title: 'Translation environment setup skill',
@@ -299,7 +282,6 @@ window.MILESTONES = [
       'Error recovery',
     ],
     resources: ['neo-translations-setup'],
-    cvWorthy: true,
   },
   {
     title: 'Translation commands and read-only agent',
@@ -318,7 +300,6 @@ window.MILESTONES = [
       '/update-strings',
       'translation-extractor',
     ],
-    cvWorthy: true,
   },
   {
     title: 'Translation automation scripts',
@@ -341,7 +322,6 @@ window.MILESTONES = [
       'generate_local_strings',
       'create_mr',
     ],
-    cvWorthy: true,
   },
   {
     title: 'Skills, commands and sub-agent architecture',
@@ -357,7 +337,6 @@ window.MILESTONES = [
       'Workflow gates',
     ],
     resources: ['Superpowers skills framework'],
-    cvWorthy: false,
   },
   {
     title: 'Skill-writing and review methodology',
@@ -372,7 +351,6 @@ window.MILESTONES = [
       'Instruction design',
     ],
     resources: ['Superpowers writing-skills'],
-    cvWorthy: false,
   },
   {
     title: 'Multi-agent engineering workflow',
@@ -388,7 +366,6 @@ window.MILESTONES = [
       'Model selection',
     ],
     resources: [],
-    cvWorthy: false,
   },
   {
     title: 'AI-assisted Android practice system',
@@ -403,7 +380,6 @@ window.MILESTONES = [
       'Translation workflows',
     ],
     resources: ['Twice-weekly AI engineering practice'],
-    cvWorthy: false,
   },
   {
     title: 'Automation engines and AI agents',
@@ -418,7 +394,6 @@ window.MILESTONES = [
       'Workflow orchestration',
     ],
     resources: ['n8n trial workspace'],
-    cvWorthy: false,
   },
   {
     title: 'Notion as an AI knowledge layer',
@@ -432,7 +407,6 @@ window.MILESTONES = [
       'Agent context',
     ],
     resources: ['Notion Plus', 'Notion AI', 'Life OS template'],
-    cvWorthy: false,
   },
   {
     title: 'Life OS master-agent design',
@@ -447,7 +421,6 @@ window.MILESTONES = [
       'Replanning',
     ],
     resources: ['Life OS master-agent design'],
-    cvWorthy: false,
   },
   {
     title: 'Life OS implementation plan',
@@ -462,7 +435,6 @@ window.MILESTONES = [
       'Confirmation gates',
     ],
     resources: ['Life OS master-agent implementation plan'],
-    cvWorthy: false,
   },
   {
     title: 'ReadCraft plugin definition',
@@ -477,7 +449,6 @@ window.MILESTONES = [
       'Instruction transformation',
     ],
     resources: ['Superpowers writing-skills'],
-    cvWorthy: false,
   },
   {
     title: 'From AI user to AI workflow builder',
@@ -493,6 +464,5 @@ window.MILESTONES = [
       'AI product design',
     ],
     resources: [],
-    cvWorthy: true,
   },
 ];
